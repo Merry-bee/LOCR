@@ -2,7 +2,7 @@
 <h1>LOCR: Location-Guided Transformer for Optical Character Recognition</h1>
 
 [![Paper](https://img.shields.io/badge/Paper-arxiv.2403.02127-white)](https://arxiv.org/abs/2403.02127)
-[![GitHub](https://img.shields.io/github/license/facebookresearch/nougat)](https://github.com/facebookresearch/nougat)
+[![GitHub](https://img.shields.io/github/license/Merry-bee/LOCR.git)](https://github.com/Merry-bee/LOCR.git)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/release/python-390/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Hugging Face Spaces](pass)
@@ -11,14 +11,12 @@
 
 This is the official repository for LOCR, the academic document PDF parser that guided by text location.
 
-Project page: pass
-Huggingface Community Demo: pass
 
 ## Install
 
 From repository:
 ```
-git clone -b release https://github.com/Merry-bee/PromptNougat.git
+git clone -b release https://github.com/Merry-bee/LOCR.git
 ```
 
 
