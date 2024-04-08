@@ -1,0 +1,54 @@
+num_nodes: 16
+resume_from_checkpoint_path: 'result/nougat-small-dense-decay/20240309/last.ckpt'
+model_path: 'checkpoints/small-dense-decay'
+result_path: 'result'
+dataset_paths: 
+  - '/mnt/petrelfs/share_data/zhonghansen/llm4science/ocrdataset/arxiv_train_data/good/train_0306.jsonl'
+tokenizer: 'dataset/tokenizer.json'
+exp_name: 'nougat-small-dense-decay'
+train_batch_sizes: 
+  - 2
+num_workers: 2
+val_batch_sizes: 
+  - 2
+val_batches: 2
+input_size: 
+  - 896
+  - 672
+max_length: 4096
+prompt_label_length: 64
+max_position_embeddings: 4096
+accumulate_grad_batches: 1
+window_size: 7
+patch_size: 4
+embed_dim: 128
+hidden_dimension: 1024
+num_heads: 
+  - 4
+  - 8
+  - 16
+  - 32
+encoder_layer: 
+  - 2
+  - 2
+  - 14
+  - 2
+decoder_layer: 4
+align_long_axis: False
+seed: 25
+lr: 0.0005
+weight_decay: 1e-06
+min_lr: 2e-05
+lr_step: 3
+gamma: 0.9999
+warmup_steps: 100
+num_training_samples_per_epoch: 10000
+max_epochs: 600
+max_steps: -1
+val_check_interval: None
+check_val_every_n_epoch: 4
+gradient_clip_val: 0.5
+verbose: False
+debug: False
+job: None
+exp_version: '20240309'

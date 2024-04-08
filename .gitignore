@@ -3,7 +3,9 @@ data/*
 output/*
 result/*
 log/*
-checkpoints/*
+checkpoints/epoch=599-step=166800.ckpt
+checkpoints/last.ckpt
+checkpoints/pytorch_model.bin
 ossutil_output/*
 .ossutil_checkpoint/*
 

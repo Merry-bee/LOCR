@@ -1,21 +1,7 @@
 {
   "version": "1.0",
-  "truncation": {
-    "direction": "Right",
-    "max_length": 4096,
-    "strategy": "LongestFirst",
-    "stride": 0
-  },
-  "padding": {
-    "strategy": {
-      "Fixed": 4096
-    },
-    "direction": "Right",
-    "pad_to_multiple_of": null,
-    "pad_id": 1,
-    "pad_type_id": 0,
-    "pad_token": "<pad>"
-  },
+  "truncation": null,
+  "padding": null,
   "added_tokens": [
     {
       "id": 0,
@@ -337,6 +323,7 @@
     "continuing_subword_prefix": null,
     "end_of_word_suffix": null,
     "fuse_unk": false,
+    "byte_fallback": false,
     "vocab": {
       "<s>": 0,
       "<pad>": 1,

@@ -1583,7 +1583,7 @@ class PromptDecoder(nn.Module):
                 input_size = input_size,
                 image_embedding_size = image_embedding_size,
             ),
-            tokenizer_file='checkpoints/0.1.0-small/tokenizer.json'
+            tokenizer_file='checkpoints/tokenizer.json'
         )
         self.model.config.is_encoder_decoder = True  # to get cross-attention
         self.model.model.decoder.embed_tokens.padding_idx = self.tokenizer.pad_token_id

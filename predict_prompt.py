@@ -232,7 +232,7 @@ def main():
     args = get_args()
     set_seed(seed=25)
     model = LOCRModel.from_pretrained(args.checkpoint).to(torch.float32)
-    # 保存模型时使用了pl.LightningModule，因此参数多了‘model.’
+ 
     if args.ckpt_path is not None:
         model.load_state_dict({re.sub(r'^model.decoder','decoder',re.sub(r'^model.encoder','encoder',k)):v for k,v in torch.load(args.ckpt_path)['state_dict'].items()})
   
@@ -262,16 +262,12 @@ def main():
             continue
         datasets.append(dataset)
 
-        # try:
-            # 每个pdf inference一次
+    
         predict_files(datasets,args,model,pdf=str(pdf))    
-        # except Exception as e:
-            # print(e)
+       
         datasets=[]
 
       
     
 if __name__ == "__main__":
-    # data/quantum/10.1088/0305-4470%2F37%2F38%2FL01.pdf
-    # data/quantum/10.1103/PhysRevApplied.15.L021003.pdf
     main()
