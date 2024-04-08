@@ -1,10 +1,9 @@
 export decay=0.85
-python predict_prompt.py data/case/arxiv_case/1209.2821.pdf \
---out output/show_case \
---checkpoint /mnt/data/oss_beijing/sunyu/nougat/PromptNougat/result/nougat/20240309/ \
---ckpt_path /mnt/data/oss_beijing/sunyu/nougat/PromptNougat/result/nougat/20240309/last.ckpt \
+python predict_prompt.py /mnt/petrelfs/share_data/zhonghansen/llm4science/ocrdataset/arxiv_train_data/repet_100/arxiv/1010.3213.pdf \
+--out output/predict \
+--checkpoint /mnt/petrelfs/share_data/zhonghansen/llm4science/ocrdataset/20240309/ \
+--ckpt_path /mnt/petrelfs/share_data/zhonghansen/llm4science/ocrdataset/20240309/last.ckpt \
 --batchsize 4 \
 --cuda "cuda:0" \
 --recompute \
---return_attention True \
---interaction True
+--return_attention True

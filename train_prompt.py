@@ -24,7 +24,7 @@ from pytorch_lightning.plugins.environments import SLURMEnvironment
 from pytorch_lightning.utilities import rank_zero_only
 from sconf import Config
 
-from nougat import NougatDataset
+from locr import LOCRDataset
 from lightning_module_prompt import PromptDataPLModule, PromptModelPLModule
 
 try:
@@ -147,7 +147,7 @@ def save_config_file(config, path):
 
 def train_prompt(config):
     """
-    Train a Nougat model using the provided configuration.
+    Train a model using the provided configuration.
 
     Args:
         `config` (dict): A dictionary containing configuration settings for training.
@@ -164,9 +164,9 @@ def train_prompt(config):
     for i, dataset_path in enumerate(config.dataset_paths): 
         for split in ["train", "validation"]:
             datasets[split].append(
-                NougatDataset(
+                LOCRDataset(
                     dataset_path=dataset_path,     
-                    nougat_model=model_module.model,
+                    locr_model=model_module.model,
                     max_length=config.max_length,
                     prompt_label_length=config.prompt_label_length,
                     split=split,
@@ -187,7 +187,7 @@ def train_prompt(config):
     custom_ckpt = CustomCheckpointIO()
 
     if not config.debug:
-        logger = Logger(config.exp_name, project="Nougat", config=dict(config), entity = 'llm4wholescience')
+        logger = Logger(config.exp_name, project="LOCR", config=dict(config), entity = 'your_entity')
     else:
         logger = TensorBoardLogger(
             save_dir=config.result_path,

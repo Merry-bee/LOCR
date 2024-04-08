@@ -7,9 +7,9 @@ LICENSE file in the root directory of this source tree.
 from typing import Iterable, List, Optional, Tuple
 import re
 from uuid import uuid4
-from nougat.dataset.utils import normalize_tex
-from nougat.dataset.parser.document import *
-from nougat.dataset.parser.latexml_parser import _clean_html_whitespace
+from locr.dataset.utils import normalize_tex
+from locr.dataset.parser.document import *
+from locr.dataset.parser.latexml_parser import _clean_html_whitespace
 from unidecode import unidecode
 
 SUPERSCRIPT_MAP = str.maketrans("0123456789", "⁰¹²³⁴⁵⁶⁷⁸⁹")

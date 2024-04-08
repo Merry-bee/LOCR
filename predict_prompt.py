@@ -15,10 +15,10 @@ from functools import partial
 import torch
 from torch.utils.data import ConcatDataset
 from tqdm import tqdm
-from nougat import PromptNougatModel
-from nougat.utils.dataset import LazyDataset
-from nougat.utils.checkpoint import get_checkpoint
-from nougat.postprocessing import markdown_compatible
+from locr import LOCRModel
+from locr.utils.dataset import LazyDataset
+from locr.utils.checkpoint import get_checkpoint
+from locr.postprocessing import markdown_compatible
 import fitz
 import numpy as np
 import json
@@ -77,6 +77,7 @@ def get_args():
     )
     parser.add_argument(
         "--interaction",
+        type=bool,
         default = False
     )
     
@@ -230,7 +231,7 @@ def predict_files(datasets,args,model,pdf=None):
 def main():
     args = get_args()
     set_seed(seed=25)
-    model = PromptNougatModel.from_pretrained(args.checkpoint).to(torch.float32)
+    model = LOCRModel.from_pretrained(args.checkpoint).to(torch.float32)
     # 保存模型时使用了pl.LightningModule，因此参数多了‘model.’
     if args.ckpt_path is not None:
         model.load_state_dict({re.sub(r'^model.decoder','decoder',re.sub(r'^model.encoder','encoder',k)):v for k,v in torch.load(args.ckpt_path)['state_dict'].items()})

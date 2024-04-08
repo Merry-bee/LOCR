@@ -5,7 +5,6 @@ This source code is licensed under the MIT license found in the
 LICENSE file in the root directory of this source tree.
 """
 import sys
-sys.path.append('/mnt/workspace/sunyu/nougat')
 import argparse
 from io import BytesIO
 import multiprocessing
@@ -18,9 +17,9 @@ from pathlib import Path
 import logging
 import fitz
 import pytesseract
-from nougat.dataset.split_md_to_pages import *
-from nougat.dataset.parser.html2md import *
-from nougat.dataset.pdffigures import call_pdffigures
+from locr.dataset.split_md_to_pages import *
+from locr.dataset.parser.html2md import *
+from locr.dataset.pdffigures import call_pdffigures
 import html2text
 from PIL import Image
 

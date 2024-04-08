@@ -10,7 +10,7 @@ ossutil_output/*
 # addtions
 scripts/*
 utils/*
-nougat/p_dataset/*
+locr/p_dataset/*
 dlc.sh
 flask-image-annotator/*
 requirements.txt

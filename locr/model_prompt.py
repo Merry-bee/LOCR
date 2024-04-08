@@ -27,7 +27,7 @@ import torch.nn as nn
 from torch.nn import CrossEntropyLoss
 import torch.nn.functional as F
 import torch.distributed as dist
-from nougat.visualization import visual_box,interact_with_human
+from locr.visualization import visual_box,interact_with_human
 
 from timm.models.swin_transformer import SwinTransformer
 from torchvision.transforms.functional import resize, rotate
@@ -53,8 +53,8 @@ from transformers.modeling_outputs import (
 )
 from transformers.file_utils import ModelOutput
 from transformers.modeling_utils import PretrainedConfig, PreTrainedModel
-from nougat.postprocessing import postprocess
-from nougat.transforms import train_transform, test_transform
+from locr.postprocessing import postprocess
+from locr.transforms import train_transform, test_transform
 
 from transformers.generation.configuration_utils import GenerationConfig
 from transformers.generation.stopping_criteria import validate_stopping_criteria
@@ -66,9 +66,9 @@ logger = logging.get_logger(__name__)
 import logging
 from dataclasses import dataclass
 
-from nougat.prompt_encoder import PromptEncoder
-from nougat.position_decoder import PositionDecoder
-from nougat.cal_loss import cal_loss
+from locr.prompt_encoder import PromptEncoder
+from locr.position_decoder import PositionDecoder
+from locr.cal_loss import cal_loss
 
 class PromptAttention(nn.Module):
     '''
@@ -1718,7 +1718,7 @@ class BARTDecoder(nn.Module):
     """
     Decoder based on Multilingual BART
     Set the initial weights and configuration with a pretrained multilingual BART model,
-    and modify the detailed configurations as a Nougat decoder
+    and modify the detailed configurations as a decoder
 
     Args:
         decoder_layer:
@@ -1881,9 +1881,9 @@ class BARTDecoder(nn.Module):
             )
         return weight
 
-class PromptNougatConfig(PretrainedConfig):
+class LOCRConfig(PretrainedConfig):
     
-    model_type = "nougat"
+    model_type = "locr"
 
     def __init__(
         self,
@@ -1993,12 +1993,12 @@ def subdiv(l, b=10):
     return subs
 
 
-class PromptNougatModel(PreTrainedModel):
+class LOCRModel(PreTrainedModel):
   
-    config_class = PromptNougatConfig
-    base_model_prefix = "nougat"
+    config_class = LOCRConfig
+    base_model_prefix = "locr"
 
-    def __init__(self, config: PromptNougatConfig):
+    def __init__(self, config: LOCRConfig):
         super().__init__(config)
         self.config = config
         self.encoder = SwinEncoder(
@@ -2223,13 +2223,13 @@ class PromptNougatModel(PreTrainedModel):
         **kwargs,
     ):
         r"""
-        Instantiate a pretrained nougat model from a pre-trained model configuration
+        Instantiate a pretrained model from a pre-trained model configuration
 
         Args:
             model_path:
                 Name of a pretrained model name either registered in huggingface.co. or saved in local.
         """
-        model = super(PromptNougatModel, cls).from_pretrained(
+        model = super(LOCRModel, cls).from_pretrained(
             model_path, *model_args, **kwargs
         )
 

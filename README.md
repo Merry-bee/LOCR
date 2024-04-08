@@ -16,7 +16,7 @@ This is the official repository for LOCR, the academic document PDF parser that 
 
 From repository:
 ```
-git clone -b release https://github.com/Merry-bee/LOCR.git
+git clone -b master https://github.com/Merry-bee/LOCR.git
 ```
 
 
@@ -51,11 +51,18 @@ options:
 
 ## Training
 
-To train or fine tune a Nougat model, run 
+To train or fine tune a LOCR model, run 
 
 ```
 python train_prompt.py --config config/train_LOCR.yaml
 ```
+
+If you do not want to use wandb, run
+
+```
+python train_prompt.py --config config/train_LOCR.yaml --debug
+```
+
 ### Prepare dataset
 
 To generate a dataset you need
@@ -63,7 +70,7 @@ To generate a dataset you need
 1. A training dataset and a validation dataset with `'.jsonl'` format.
 2. An image directory containing the images.
 3. Each jsonl file contains json lines, with each line as a dict of `{'image':$image_path,'prompt':$list_of_bbox,'pretext':$list_of_tokens}`, where `$image_path` is the relative path to your image directory.
-4. Run `nougat.dataset.gen_seek.py` to generate `.seek.map` files.
+4. Run `locr.dataset.gen_seek.py` to generate `.seek.map` files.
 
 
 The resulting directory structure can look as follows:

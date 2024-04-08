@@ -1,10 +1,10 @@
 resume_from_checkpoint_path: null
 result_path: "result"
-model_path: "checkpoints/0.1.0-small"
-dataset_paths: ["data/train_data/train_lorem.jsonl"]
+model_path: "/mnt/petrelfs/share_data/zhonghansen/llm4science/ocrdataset/20240309"
+dataset_paths: ["/mnt/petrelfs/share_data/zhonghansen/llm4science/ocrdataset/arxiv_train_data/good/train_0306.jsonl"]
 tokenizer: "dataset/tokenizer.json"
-exp_name: "nougat"
-train_batch_sizes: [1]
+exp_name: "LOCR"
+train_batch_sizes: [2]
 num_workers: 8
 val_batch_sizes: [2]
 val_batches: 1
@@ -30,7 +30,7 @@ lr_step: 16
 gamma: 0.9996
 warmup_steps: 250
 num_training_samples_per_epoch: 10000
-max_epochs: 30
+max_epochs: 60
 max_steps: -1
 val_check_interval: null
 check_val_every_n_epoch: 1

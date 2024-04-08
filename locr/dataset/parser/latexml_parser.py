@@ -11,7 +11,7 @@ from typing import Optional, Set
 from bs4 import BeautifulSoup, NavigableString
 import soupsieve as sv
 
-from nougat.dataset.parser.document import *
+from locr.dataset.parser.document import *
 
 
 def printerr(*args, **kwargs):

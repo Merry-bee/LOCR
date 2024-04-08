@@ -1,4 +1,4 @@
-from nougat.position_decoder import diou_loss,focal_loss,celoss
+from locr.position_decoder import diou_loss,focal_loss,celoss
 from torch.nn import CrossEntropyLoss
 import torch
 import re

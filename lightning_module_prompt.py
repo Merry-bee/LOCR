@@ -20,9 +20,9 @@ from torch.nn.utils.rnn import pad_sequence
 from torch.optim.lr_scheduler import LambdaLR
 from torch.utils.data import DataLoader
 
-from nougat import PromptNougatConfig, PromptNougatModel
-from nougat.metrics import get_metrics
-from nougat.cal_loss import cal_loss
+from locr import LOCRConfig, LOCRModel
+from locr.metrics import get_metrics
+from locr.cal_loss import cal_loss
 
 
 class PromptModelPLModule(pl.LightningModule):
@@ -31,7 +31,7 @@ class PromptModelPLModule(pl.LightningModule):
         self.validation_step_outputs = []
         self.config = config
         if self.config.get("model_path", False):
-            self.model = PromptNougatModel.from_pretrained(
+            self.model = LOCRModel.from_pretrained(
                 self.config.model_path,
                 input_size=self.config.input_size,
                 max_length=self.config.max_length,
@@ -51,8 +51,8 @@ class PromptModelPLModule(pl.LightningModule):
                 print('none')
     
         else:
-            self.model = PromptNougatModel(
-                config=PromptNougatConfig(
+            self.model = LOCRModel(
+                config=LOCRConfig(
                     input_size=self.config.input_size,
                     max_length=self.config.max_length,
                     align_long_axis=self.config.align_long_axis,

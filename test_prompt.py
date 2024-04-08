@@ -16,13 +16,13 @@ import numpy as np
 import torch
 from tqdm import tqdm
 
-from nougat import PromptNougatModel
-from nougat.metrics import compute_metrics
-from nougat.utils.checkpoint import get_checkpoint
-from nougat.utils.dataset import NougatDataset
+from locr import LOCRModel
+from locr.metrics import compute_metrics
+from locr.utils.checkpoint import get_checkpoint
+from locr.utils.dataset import LOCRDataset
 from lightning_module_prompt import PromptDataPLModule, PromptModelPLModule
-from nougat.cal_loss import cal_loss
-from nougat.visualization import visual_box
+from locr.cal_loss import cal_loss
+from locr.visualization import visual_box
 
 def show_gt(model,label_ids,prompt_true):
     token_lst = model.decoder.tokenizer.batch_decode(
@@ -33,7 +33,7 @@ def show_gt(model,label_ids,prompt_true):
         print(f'This token:"{token}",next coord:"{coord}"')    
 
 def test(args):
-    pretrained_model = PromptNougatModel.from_pretrained(args.model_path).to(torch.float32)
+    pretrained_model = LOCRModel.from_pretrained(args.model_path).to(torch.float32)
     if args.ckpt_path is not None:
         pretrained_model.load_state_dict({re.sub(r'^model.decoder','decoder',re.sub(r'^model.encoder','encoder',k)):v for k,v in torch.load(args.ckpt_path)['state_dict'].items()})
     if torch.cuda.is_available():
@@ -48,9 +48,9 @@ def test(args):
     predictions = []
     ground_truths = []
     metrics = defaultdict(list)
-    dataset = NougatDataset(
+    dataset = LOCRDataset(
         dataset_path=args.dataset,
-        nougat_model=pretrained_model,
+        locr_model=pretrained_model,
         max_length=pretrained_model.config.max_length,
         split=args.split,
     )
@@ -93,7 +93,6 @@ def test(args):
             for m in _metrics:
                 for key, value in m.items():
                     metrics[key].append(value)
-            print({key: values[-1] for key, values in metrics.items()})
             print({key: sum(values) / len(values) for key, values in metrics.items()})
    
 

@@ -12,7 +12,7 @@ import io
 from pathlib import Path
 import torch
 
-BASE_URL = "https://github.com/facebookresearch/nougat/releases/download"
+BASE_URL = "https://github.com/facebookresearch/locr/releases/download"
 MODEL_TAG = "0.1.0-small"
 
 
@@ -47,7 +47,7 @@ def download_as_bytes_with_progress(url: str, name: str = None) -> bytes:
 
 
 def download_checkpoint(checkpoint: Path):
-    print("downloading nougat checkpoint version", MODEL_TAG, "to path", checkpoint)
+    print("downloading locr checkpoint version", MODEL_TAG, "to path", checkpoint)
     files = [
         "config.json",
         "pytorch_model.bin",
@@ -66,23 +66,21 @@ def get_checkpoint(
     checkpoint_path: Optional[os.PathLike] = None, download: bool = True
 ) -> Path:
     """
-    Get the path to the Nougat model checkpoint.
+    Get the path to the model checkpoint.
 
-    This function retrieves the path to the Nougat model checkpoint. If the checkpoint does not
+    This function retrieves the path to the model checkpoint. If the checkpoint does not
     exist or is empty, it can optionally download the checkpoint.
 
     Args:
-        checkpoint_path (Optional[os.PathLike]): The path to the checkpoint. If not provided,
-            it will check the "NOUGAT_CHECKPOINT" environment variable or use the default location.
+        checkpoint_path (Optional[os.PathLike]): The path to the checkpoint. 
         download (bool): Whether to download the checkpoint if it doesn't exist or is empty.
             Default is True.
 
     Returns:
-        Path: The path to the Nougat model checkpoint.
+        Path: The path to the model checkpoint.
     """
     checkpoint = Path(
         checkpoint_path
-        or os.environ.get("NOUGAT_CHECKPOINT", torch.hub.get_dir() + "/nougat")
     )
     if checkpoint.exists() and checkpoint.is_file():
         checkpoint = checkpoint.parent

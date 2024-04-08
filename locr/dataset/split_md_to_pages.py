@@ -5,7 +5,6 @@ This source code is licensed under the MIT license found in the
 LICENSE file in the root directory of this source tree.
 """
 import sys
-sys.path.append('/mnt/workspace/sunyu/nougat')
 import argparse
 from collections import Counter
 from copy import deepcopy
@@ -26,13 +25,13 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.linear_model import SGDClassifier
 
-from nougat.dataset.staircase import Staircase
-from nougat.dataset.splitter import (
+from locr.dataset.staircase import Staircase
+from locr.dataset.splitter import (
     Splitter,
     get_first_last,
     get_glob_index,
 )
-from nougat.dataset.utils import unicode_to_latex, remove_pretty_linebreaks
+from locr.dataset.utils import unicode_to_latex, remove_pretty_linebreaks
 
 
 class BagOfWords:
@@ -502,7 +501,7 @@ def split_markdown(
 
 
 if __name__ == "__main__":
-    # python -m pdb nougat/dataset/split_md_to_pages.py --md output/greedy_search/error/j.chemphys.2017.11.022.mmd --pdf data/quantum/10.1016/j.chemphys.2017.11.022.pdf --out output/tmp --jsonl data/train_data --figure None
+    # python -m pdb locr/dataset/split_md_to_pages.py --md output/greedy_search/error/j.chemphys.2017.11.022.mmd --pdf data/quantum/10.1016/j.chemphys.2017.11.022.pdf --out output/tmp --jsonl data/train_data --figure None
     parser = argparse.ArgumentParser()
     parser.add_argument("--md", type=str, help="Markdown file", required=True)
     parser.add_argument("--pdf", type=str, help="PDF File", required=True)

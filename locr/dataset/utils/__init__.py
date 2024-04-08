@@ -4,5 +4,5 @@ Copyright (c) Meta Platforms, Inc. and affiliates.
 This source code is licensed under the MIT license found in the
 LICENSE file in the root directory of this source tree.
 """
-from nougat.dataset.utils.latex_conversion import *
-from nougat.dataset.utils.utils import *
+from locr.dataset.utils.latex_conversion import *
+from locr.dataset.utils.utils import *

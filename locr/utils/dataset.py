@@ -19,7 +19,7 @@ import json
 import orjson
 from torch.utils.data import Dataset
 from transformers.modeling_utils import PreTrainedModel
-from nougat.dataset.rasterize import rasterize_paper
+from locr.dataset.rasterize import rasterize_paper
 
 
 class ImageDataset(torch.utils.data.Dataset):
@@ -204,7 +204,7 @@ class SciPDFDataset(Dataset):
             yield self[i]
 
 
-class NougatDataset(Dataset):
+class LOCRDataset(Dataset):
     """
     Args:
         dataset_path: the path to the jsonl file
@@ -213,27 +213,27 @@ class NougatDataset(Dataset):
     def __init__(
         self,
         dataset_path: str,
-        nougat_model: PreTrainedModel,
+        locr_model: PreTrainedModel,
         max_length: int,
         prompt_label_length: int = 1,
         split: str = "train",
         root_name: str = "",
     ):
         super().__init__()
-        self.nougat_model = nougat_model
+        self.locr_model = locr_model
         self.max_length = max_length
         self.prompt_label_length = prompt_label_length
         self.split = split
-        self.perturb = "NOUGAT_PERTURB" in os.environ and os.environ["NOUGAT_PERTURB"]
+        self.perturb = "PERTURB" in os.environ and os.environ["PERTURB"]
         # TODO improve naming conventions
         template = "%s"
         self.dataset = SciPDFDataset(
             dataset_path, split=self.split, template=template, root_name=root_name
         )
         self.dataset_length = len(self.dataset)
-        self.pad_id = self.nougat_model.decoder.tokenizer.pad_token_id
-        self.eos_id = self.nougat_model.decoder.tokenizer.eos_token_id
-        self.global_start_id = self.nougat_model.decoder.model.config.decoder_start_token_id  
+        self.pad_id = self.locr_model.decoder.tokenizer.pad_token_id
+        self.eos_id = self.locr_model.decoder.tokenizer.eos_token_id
+        self.global_start_id = self.locr_model.decoder.model.config.decoder_start_token_id  
         self.gloabl_eos_id = 10   
         if self.perturb:
             print("Perturb")
@@ -258,10 +258,10 @@ class NougatDataset(Dataset):
         if sample is None or sample["image"] is None or prod(sample["image"].size) == 0:
             input_tensor = None
         else:
-            input_tensor = self.nougat_model.encoder.prepare_input(
+            input_tensor = self.locr_model.encoder.prepare_input(
                 sample["image"], random_padding=self.split == "train"
             )
-        tokenizer_out = self.nougat_model.decoder.tokenizer(
+        tokenizer_out = self.locr_model.decoder.tokenizer(
                 sample["pretext"]+sample['label'], 
                 return_token_type_ids=False,
             )
@@ -321,7 +321,7 @@ class NougatDataset(Dataset):
                     pos = random.randint(1, unpadded_length - 2)
                     if random.random() < 0.5:   # 50%概率替换token
                         token = random.randint(
-                            23, len(self.nougat_model.decoder.tokenizer) - 1
+                            23, len(self.locr_model.decoder.tokenizer) - 1
                         )
                         pre_ids[pos] = token
                     else:   # 50%概率替换box

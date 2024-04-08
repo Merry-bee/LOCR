@@ -5,15 +5,14 @@ This source code is licensed under the MIT license found in the
 LICENSE file in the root directory of this source tree.
 """
 import sys
-sys.path.append('/mnt/workspace/sunyu/nougat')
 import argparse
 from pathlib import Path
 from typing import List, Optional
 from bs4 import BeautifulSoup
 from tqdm import tqdm
 import htmlmin
-from nougat.dataset.parser.latexml_parser import parse_latexml, _clean_html_whitespace
-from nougat.dataset.parser.markdown import format_document
+from locr.dataset.parser.latexml_parser import parse_latexml, _clean_html_whitespace
+from locr.dataset.parser.markdown import format_document
 
 
 def check_file_path(paths: List[Path], wdir: Optional[Path] = None) -> List[str]:
@@ -63,7 +62,7 @@ def html2md(html,outp):
         f.write(out)
     
 if __name__ == "__main__":
-    # python nougat/dataset/parser/html2md.py --html data/arxiv_color/0710.2897/outputs/color.html --out data/arxiv_color/0710.2897/outputs/color.mmd
+    # python locr/dataset/parser/html2md.py --html data/arxiv_color/0710.2897/outputs/color.html --out data/arxiv_color/0710.2897/outputs/color.mmd
     parser = argparse.ArgumentParser()
     parser.add_argument("--html", type=Path, nargs="+", help="HTML file", required=True)
     parser.add_argument("--out", type=Path, help="Output file", required=True)

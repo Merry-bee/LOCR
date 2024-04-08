@@ -7,7 +7,7 @@
 import numpy as np
 import torch
 from torch import nn
-from nougat.visualization import visual_box
+from locr.visualization import visual_box
 from typing import Any, Optional, Tuple, Type
 
 from .common import LayerNorm2d

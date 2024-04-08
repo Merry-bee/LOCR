@@ -589,8 +589,8 @@ def postprocess(
         Union[str, List[str]]: The postprocessed text or list of postprocessed texts.
     """
     if type(generation) == list:
-        if os.environ.get("NOUGAT_MULTIPROCESSING"):
-            with Pool(int(os.environ.get("NOUGAT_MULTIPROCESSING"))) as p:
+        if os.environ.get("MULTIPROCESSING"):
+            with Pool(int(os.environ.get("MULTIPROCESSING"))) as p:
                 return p.map(
                     partial(postprocess_single, markdown_fix=markdown_fix), generation
                 )

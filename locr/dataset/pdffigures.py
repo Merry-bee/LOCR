@@ -12,7 +12,7 @@ PDFFIGURES2_JAR_PATH = os.environ.get("PDFFIGURES_PATH", None)
 logger = logging.getLogger()
 if PDFFIGURES2_JAR_PATH is None:
     logger.warning(
-        "You need to configure the path to the pdffigures2 executable in this file (nougat/dataset/pdffigures.py) or set the environment variable 'PDFFIGURES_PATH'."
+        "You need to configure the path to the pdffigures2 executable in this file (locr/dataset/pdffigures.py) or set the environment variable 'PDFFIGURES_PATH'."
     )
 
 
