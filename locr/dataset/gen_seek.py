@@ -12,7 +12,7 @@ import argparse
 
 def get_args():
     '''
-    sh: python locr/dataset/gen_seek.py data/arxiv_train_data/train.jsonl data/arxiv_train_data/validation.jsonl
+    sh: python locr/dataset/gen_seek.py dataset/train_demo.jsonl dataset/validation_demo.jsonl
     '''
     parser = argparse.ArgumentParser()
     parser.add_argument("src_file", nargs="+", type=Path, help="JSONL file in question")

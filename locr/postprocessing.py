@@ -564,9 +564,11 @@ def postprocess_single(generation: str, markdown_fix: bool = True) -> str:
     )
     generation = re.sub(r"(\*\*S\. A\. B\.\*\*\n+){2,}", "", generation)
     generation = re.sub(r"^#+( [\[\d\w])?$", "", generation, flags=re.M)
+    generation = parenthesis_match(generation)
+    generation = re.sub(r"(\\\(.*?\\\))"," \\1 ",generation)
     generation = re.sub(r"^\.\s*$", "", generation, flags=re.M)
     generation = re.sub(r"\n{3,}", "\n\n", generation)
-    generation = parenthesis_match(generation)
+    
     if markdown_fix:
         return markdown_compatible(generation)
     else:

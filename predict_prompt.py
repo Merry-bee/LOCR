@@ -133,20 +133,18 @@ def predict_files(datasets,args,model,pdf=None):
         # one pdf file may also be divided into multiple batches: is_last_page:('','','ccc.pdf','','','','')
         # sample: [bs,3,896,672]
     
-        # if i not in [10]:
-        #     continue
+     
         model_output = model.inference(
             args,
             image_tensors=sample.to(args.cuda),
-            prompt=torch.zeros([sample.shape[0],1,2,2],dtype=torch.float32).to(args.cuda),# [bs,1,2,2]
+            prompt=torch.zeros([sample.shape[0],1,2,2],dtype=torch.float32).to(args.cuda),
             return_attentions=args.return_attention,
             pdf=(pdf,i),
             use_cache=True,
             validation = not args.interaction,
             )
         
-        # 存储scores和attentions
-        # 注：存attention时batch_size=1；
+     
         if 'attentions' in model_output.keys():  # return_attentions, score of one page
             score = {
                 'logits': model_output['logits'],
@@ -156,8 +154,7 @@ def predict_files(datasets,args,model,pdf=None):
             scores.append(score)
         # check if model output is faulty
         for j, output in enumerate(model_output["predictions"]):
-        # for j in range(len(model_output)):
-            # output = model_output[j]['predictions']
+       
             if page_num == 0:
                 logging.info(
                     "Processing file %s with %i pages"
@@ -176,15 +173,7 @@ def predict_files(datasets,args,model,pdf=None):
                 predictions.append(f"\n\n[MISSING_PAGE_FAIL:{page_num}]\n\n")
                 predictions.append(output)
                 predictions.append(f"\n\n[MISSING_PAGE_FAIL:{page_num}]\n\n")
-                '''
-                else:   # model_output["repeats"][j] = 0
-                    # If we end up here, it means the document page is too different from the training domain.
-                    # This can happen e.g. for cover pages.
-                    # predictions.append(f"\n\n[MISSING_PAGE_EMPTY:{i*args.batchsize+j+1}]\n\n")
-                    predictions.append(f"\n\n[MISSING_PAGE_EMPTY:{page_num}]\n\n")
-                    predictions.append(output)
-                    predictions.append(f"\n\n[MISSING_PAGE_EMPTY:{page_num}]\n\n")'''
-                
+               
                 pdf_error = True
               
             else:
@@ -195,18 +184,11 @@ def predict_files(datasets,args,model,pdf=None):
                 labels = model_output['sequences'][j][1:].unsqueeze(0)              # [batch_size,seq_len]
                
                 
-            if is_last_page[j]: # 一页以输出：if True:
+            if is_last_page[j]: 
                 # one pdf file compeleted, clear the predictions and pdf_error
                 out = "".join(predictions).strip()
                 out = re.sub(r"\n{3,}", "\n\n", out).strip()
-                # if args.return_attention:
-                #     # 每个json一个pdf
-                #     if pdf_error:
-                #         score_path = args.out / Path('error_scores') / Path(pdf).with_suffix(".pkl").name
-                #     else:
-                #         score_path = args.out / Path('correct_scores') / Path(pdf).with_suffix(".pkl").name 
-                #     with open(score_path,'wb') as fo:
-                #         pickle.dump(scores,fo)  
+              
                 if args.out:   
                     if pdf_error:
                         out_path = args.out / Path('error') / Path(pdf).with_suffix(".mmd").name

@@ -5,7 +5,7 @@
 [![GitHub](https://img.shields.io/github/license/Merry-bee/LOCR.git)](https://github.com/Merry-bee/LOCR.git)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/release/python-390/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![Hugging Face Spaces](pass)
+[![Hugging Face Spaces](https://img.shields.io/badge/🤗%20Hugging%20Face-Community%20Space-blue)](https://huggingface.co/Merry-bee/LOCR/tree/main)
 
 </div>
 
@@ -16,22 +16,32 @@ This is the official repository for LOCR, the academic document PDF parser that 
 
 From repository:
 ```
-git clone -b master https://github.com/Merry-bee/LOCR.git
+git clone https://github.com/Merry-bee/LOCR.git
 ```
-
-
-## Get prediction for a PDF
 
 ### Download the model
 
-Huggingface: pass
+You need to download the `pytorch_model.bin` from Hugging Face: https://huggingface.co/Merry-bee/LOCR/tree/main.
+
+The checkpoints directory structure can look as follows:
+
+```
+checkpoints/
+├── config.json
+├── pytorch_model.bin
+├── special_tokens_map.json
+├── tokenizer_config.json
+└── tokenizer.json
+```
+
+## Get prediction for a PDF
 
 To get predictions for a PDF run 
 
 ```source predict_prompt.sh```
 
 ```
-usage: python predict_prompt.py pdf
+bash file: python predict_prompt.py pdf
 
 environ:
   decay                 decay_weight, 1 as no decay.
@@ -42,14 +52,13 @@ arguments:
 options:
   --batchsize           Batch size to use.
   --checkpoint          Path to checkpoint directory.
-  --ckpt_path           Checkpoint file.
   --out                 Output directory.
   --recompute           Recompute already computed PDF, discarding previous predictions.
   --return_attention    True when prediction.
   --interaction         Whether to turn on human-interactive mode.
 ```
 
-## Training
+## Training with your own dataset
 
 To train or fine tune a LOCR model, run 
 
@@ -63,20 +72,20 @@ If you do not want to use wandb, run
 python train_prompt.py --config config/train_LOCR.yaml --debug
 ```
 
-### Prepare dataset
+### Prepare a dataset
 
 To generate a dataset you need
 
-1. A training dataset and a validation dataset with `'.jsonl'` format.
+1. A training dataset and a validation dataset with `.jsonl` format.
 2. An image directory containing the images.
 3. Each jsonl file contains json lines, with each line as a dict of `{'image':$image_path,'prompt':$list_of_bbox,'pretext':$list_of_tokens}`, where `$image_path` is the relative path to your image directory.
 4. Run `locr.dataset.gen_seek.py` to generate `.seek.map` files.
 
 
-The resulting directory structure can look as follows:
+The data directory structure can look as follows:
 
 ```
-root/
+dataset/
 ├── images
 ├── train.jsonl
 ├── train.seek.map
@@ -122,4 +131,4 @@ This repository builds on top of the [Donut](https://github.com/clovaai/donut/) 
 
 ## License
 
-LOCR codebase is licensed under MIT.
+LOCR codebase is licensed under apache-2.0.
