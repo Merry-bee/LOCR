@@ -2,7 +2,6 @@
 <h1>LOCR: Location-Guided Transformer for Optical Character Recognition</h1>
 
 [![Paper](https://img.shields.io/badge/Paper-arxiv.2403.02127-white)](https://arxiv.org/abs/2403.02127)
-[![GitHub](https://img.shields.io/github/license/Merry-bee/LOCR.git)](https://github.com/Merry-bee/LOCR.git)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/release/python-390/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Hugging Face Spaces](https://img.shields.io/badge/🤗%20Hugging%20Face-Community%20Space-blue)](https://huggingface.co/Merry-bee/LOCR/tree/main)
@@ -89,8 +88,6 @@ dataset/
 ├── images
 ├── train.jsonl
 ├── train.seek.map
-├── test.jsonl
-├── test.seek.map
 ├── validation.jsonl
 └── validation.seek.map
 ```

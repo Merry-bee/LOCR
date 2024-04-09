@@ -1,8 +1,8 @@
 resume_from_checkpoint_path: null
 result_path: "result"
 model_path: "checkpoints"
-dataset_paths: ["/mnt/petrelfs/share_data/zhonghansen/llm4science/ocrdataset/arxiv_train_data/good/train_0306.jsonl"]
-tokenizer: "dataset/tokenizer.json"
+dataset_paths: ["dataset/train_demo.jsonl"]
+tokenizer: "checkpoints/tokenizer.json"
 exp_name: "LOCR"
 train_batch_sizes: [2]
 num_workers: 8
