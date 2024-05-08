@@ -2178,10 +2178,7 @@ class LOCRModel(PreTrainedModel):
                     if idx / N > 0.85:  # at most last bit
                         output["repeats"].append(None)
                         continue
-                  
-                    logging.warn("Found repetitions in sample %i" % b)
-
-
+                
                     output["repeats"].append(idx) 
                     output["sequences"][b, idx:] = self.pad_id
                     output["repetitions"][b, :idx] = self.pad_id
@@ -2195,7 +2192,7 @@ class LOCRModel(PreTrainedModel):
             output["repetitions"], skip_special_tokens=True
         )
         for b in range(len(output["repetitions"])):
-            if output["repeats"][b]:
+            if output["repeats"][b] and output["repetitions"][b]:
                 print(f'Rep {b}_{output["repeats"][b]}: {output["repetitions"][b]}')
        
         output["predictions"] = postprocess(                   
