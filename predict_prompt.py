@@ -94,9 +94,7 @@ def get_args():
         if not args.out.is_dir():
             logging.error("Output has to be directory.")
             sys.exit(1)
-    if args.return_attention:   # return attention page by page
-        args.batchsize = 1
-        args.recompute = True
+    
     if len(args.pdf) == 1 and not args.pdf[0].suffix == ".pdf":
         # input is a list file of pdfs
         try:
@@ -123,7 +121,6 @@ def predict_files(datasets,args,model,pdf=None):
     )
 
     predictions = []
-    scores = []
     file_index = 0
     page_num = 0
     pdf_error = False
@@ -145,13 +142,7 @@ def predict_files(datasets,args,model,pdf=None):
             )
         
      
-        if 'attentions' in model_output.keys():  # return_attentions, score of one page
-            score = {
-                'logits': model_output['logits'],
-                'decoder_attention': model_output["attentions"]["self_attentions"],
-                'cross_attention': model_output["attentions"]["cross_attentions"]
-            }
-            scores.append(score)
+       
         # check if model output is faulty
         for j, output in enumerate(model_output["predictions"]):
        
@@ -167,8 +158,7 @@ def predict_files(datasets,args,model,pdf=None):
                 pdf_error = True
           
                
-            elif model_output["repeats"][j] is not None:
-                # if model_output["repeats"][j] > 0:
+            elif model_output["repeats"][j] is not None and model_output["repetitions"][j]:
                 # If we end up here, it means the output is most likely not complete and was truncated.
                 predictions.append(f"\n\n[MISSING_PAGE_FAIL:{page_num}]\n\n")
                 predictions.append(output)
@@ -203,7 +193,6 @@ def predict_files(datasets,args,model,pdf=None):
                 else:
                     print(out, "\n\n")
                 predictions = []
-                scores = []
                 page_num = 0
                 file_index += 1
                 pdf_error = False
